@@ -1,8 +1,17 @@
 package com.lazada.picturetest.injection.scope;
 
-/**
- * Created by Harol Higuera on 1/15/17.
- */
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-public class ApplicationScope {
+import javax.inject.Scope;
+
+/**
+ * Created by Harol Higuera on 1/15/17
+ */
+@Scope
+@Retention(RetentionPolicy.CLASS)
+public @interface ApplicationScope {
+
+
+
 }
