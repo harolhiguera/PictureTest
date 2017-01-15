@@ -2,6 +2,7 @@ package com.lazada.picturetest.application;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 import com.lazada.picturetest.injection.component.ApplicationComponent;
@@ -17,6 +18,9 @@ import timber.log.Timber;
 public class App extends Application {
 
     private ApplicationComponent applicationComponent;
+    public static Resources resources;
+
+
 
     public static App get(Activity activity) {
         return (App) activity.getApplication();
@@ -35,9 +39,12 @@ public class App extends Application {
         applicationComponent = DaggerApplicationComponent.builder()
                 .contextModule(new ContextModule(this))
                 .build();
+
+        resources = getResources();
     }
 
     public ApplicationComponent component() {
         return applicationComponent;
     }
+
 }
