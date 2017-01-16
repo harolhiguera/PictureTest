@@ -8,6 +8,8 @@ public class Constant {
 
     public static final String API_BASE_URL = "https://api.500px.com";
 
+    public static final String CONSUMER_KEY = "gCFQWYuabKFjgB8JcBj5tSFeLSj2K8P629815UbZ";
+
     public static final String[] categories = new String[]{
             "Uncategorized",
             "Abstract",

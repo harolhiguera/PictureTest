@@ -37,6 +37,7 @@ dependencies {
     final TIMBER_VERSION = '4.4.0'
     final IOS_LIKE_SCROLL = '1.0.4'
     final DAGGER_VERSION = '2.8'
+    final CIRCLE_IMAGE_VIEW = '2.1.0'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -73,6 +74,8 @@ dependencies {
     compile "com.jakewharton.timber:timber:$TIMBER_VERSION"
     // IOS-like scroll
     compile "me.everything:overscroll-decor-android:$IOS_LIKE_SCROLL"
+    // Circle Image View
+    compile "de.hdodenhof:circleimageview:$CIRCLE_IMAGE_VIEW"
 
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
