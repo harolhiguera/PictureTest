@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.lazada.picturetest.Bus.PhotoBus;
 import com.lazada.picturetest.R;
 import com.lazada.picturetest.adapters.ListOfCategoriesAdapter;
 import com.lazada.picturetest.helpers.Constant;
@@ -31,7 +32,6 @@ public class MainFragment extends Fragment {
 
     @BindView(R.id.list_categories)
     ListView list_categories;
-
 
     public MainFragment() {
         // Required empty public constructor
@@ -72,77 +72,12 @@ public class MainFragment extends Fragment {
 
             PhotoListFragment photoListFragment = PhotoListFragment.newInstance(Constant.categories[i]);
 
-
             fragmentManager.beginTransaction()
                     .replace(R.id.main_container,photoListFragment)
                     .addToBackStack("PhotoListFragment")
                     .commit();
+            PhotoBus.showBackBtn.onNext(Constant.categories[i]);
 
-
-//            TextView label = (TextView) view.findViewById(R.id.txt_label);
-//
-//            Timber.d("Here we go!!");
-//
-//
-//
-//            label.animate().alpha(0.3f).setInterpolator(new AccelerateInterpolator()).setListener(new Animator.AnimatorListener() {
-//                @Override
-//                public void onAnimationStart(Animator animator) {
-//
-//                }
-//
-//                @Override
-//                public void onAnimationEnd(Animator animator) {
-//
-//                    Timber.d("First animation end");
-//
-//                    label.animate().alpha(1.0f).setDuration(200).start();
-//
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//
-//                    PhotoListFragment photoListFragment = PhotoListFragment.newInstance(Constant.categories[i]);
-//
-//
-//                    fragmentManager.beginTransaction()
-//                            .replace(R.id.main_container,photoListFragment)
-//                            .addToBackStack("PhotoListFragment")
-//                            .commit();
-//                }
-//
-//                @Override
-//                public void onAnimationCancel(Animator animator) {
-//
-//                }
-//
-//                @Override
-//                public void onAnimationRepeat(Animator animator) {
-//
-//                }
-//            });
-
-
-
-//            label.animate().alpha(0.3f).setDuration(100).setListener(new AnimatorListenerAdapter() {
-//                @Override
-//                public void onAnimationEnd(Animator animation) {
-//                    super.onAnimationEnd(animation);
-//
-//                    Timber.d("First animation end");
-//
-//                    label.animate().alpha(1.0f).setDuration(200).start();
-//
-////                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-////
-////                    PhotoListFragment photoListFragment = PhotoListFragment.newInstance(Constant.categories[i]);
-////
-////
-////                    fragmentManager.beginTransaction()
-////                            .replace(R.id.main_container,photoListFragment)
-////                            .addToBackStack("PhotoListFragment")
-////                            .commit();
-//
-//                }
-//            }).start();
         }
     }
 

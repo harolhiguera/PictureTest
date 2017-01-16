@@ -38,6 +38,8 @@ dependencies {
     final IOS_LIKE_SCROLL = '1.0.4'
     final DAGGER_VERSION = '2.8'
     final CIRCLE_IMAGE_VIEW = '2.1.0'
+    final REACTIVE_ANDROID = '1.2.1'
+    final REACTIVE_JAVA = '1.1.6'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -76,6 +78,9 @@ dependencies {
     compile "me.everything:overscroll-decor-android:$IOS_LIKE_SCROLL"
     // Circle Image View
     compile "de.hdodenhof:circleimageview:$CIRCLE_IMAGE_VIEW"
+    // Reactive
+    compile "io.reactivex:rxandroid:$REACTIVE_ANDROID"
+    compile "io.reactivex:rxjava:$REACTIVE_JAVA"
 
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'

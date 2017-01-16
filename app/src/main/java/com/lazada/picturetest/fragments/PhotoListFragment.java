@@ -4,6 +4,7 @@ package com.lazada.picturetest.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -60,6 +61,8 @@ public class PhotoListFragment extends Fragment {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.swiperefresh)
+    SwipeRefreshLayout swiperefresh;
 
     @Inject
     PhotoListAdapter photoListAdapter;
@@ -104,6 +107,8 @@ public class PhotoListFragment extends Fragment {
         LoadNextPage();
 
         pageCounter = 1;
+        swiperefresh.setColorSchemeResources(R.color.list_back_01);
+        swiperefresh.setRefreshing(true);
 
         return view;
     }
@@ -210,6 +215,7 @@ public class PhotoListFragment extends Fragment {
 
                     if (pageCounter == 1) {
                         totalPages = photoModel.getTotal_pages();
+                        swiperefresh.setRefreshing(false);
                     }
 
                     Timber.d("totalElements: "+ totalElements);

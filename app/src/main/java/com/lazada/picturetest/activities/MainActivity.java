@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.lazada.picturetest.Bus.PhotoBus;
 import com.lazada.picturetest.R;
 import com.lazada.picturetest.fragments.MainFragment;
 import com.lazada.picturetest.helpers.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Harol Higuera on 1/15/17.
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     TextView titleBar;
 
     private FragmentManager fragmentManager;
+    private CompositeSubscription compositeSubscription;
 
 
     @Override
@@ -35,10 +39,11 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        titleBar.setTypeface(Utils.AdventProSemiBold);
 
         SetTitle(getString(R.string.app_name));
-        titleBar.setTypeface(Utils.AdventProSemiBold);
-        SetBackgBtnState(true);
+        SetBackgBtnState(false);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -47,6 +52,21 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager.beginTransaction().replace(R.id.main_container, new MainFragment()).commit();
 
+        compositeSubscription = new CompositeSubscription();
+
+        Subscribe();
+    }
+
+    private void Subscribe() {
+
+        compositeSubscription.add(PhotoBus.showBackBtnM.subscribe((String cat)->{
+
+            if(cat != null){
+                SetTitle(cat);
+                SetBackgBtnState(true);
+            }
+
+        }));
     }
 
 
@@ -64,5 +84,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void SetTitle(String string) {
         titleBar.setText(string);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home){
+            SetTitle(getString(R.string.app_name));
+            SetBackgBtnState(false);
+
+            fragmentManager.popBackStack("PhotoListFragment", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
