@@ -4,6 +4,7 @@ package com.lazada.picturetest.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,6 +87,19 @@ public class PhotoListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null){
+
+            savedInstanceState.getInt("pageCounter");
+            savedInstanceState.getInt("totalPages");
+            savedInstanceState.getString("keyWord");
+            savedInstanceState.getStringArrayList("arrayPhotos");
+            savedInstanceState.getStringArrayList("arrayAuthorAvatar");
+            savedInstanceState.getStringArrayList("arrayAuthorName");
+            savedInstanceState.getStringArrayList("arrayTitles");
+
+
+        }
+
         PhotoListFragmentComponent component = DaggerPhotoListFragmentComponent.builder()
                 .photoListFragmentModule(new PhotoListFragmentModule(this))
                 .applicationComponent(App.get(this).component())
@@ -109,6 +123,7 @@ public class PhotoListFragment extends Fragment {
         pageCounter = 1;
         swiperefresh.setColorSchemeResources(R.color.list_back_01);
         swiperefresh.setRefreshing(true);
+        photoListAdapter.UpdateEntries(arrayPhotos, arrayAuthorName, arrayTitles, arrayAuthorAvatar);
 
         return view;
     }
@@ -169,6 +184,21 @@ public class PhotoListFragment extends Fragment {
         public void onItemClick(View childView, int position) {
             super.onItemClick(childView, position);
 
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+            FullImageFragment fullImageFragment = FullImageFragment.newInstance(
+                    arrayPhotos.get(position),
+                    arrayAuthorAvatar.get(position),
+                    arrayTitles.get(position),
+                    arrayAuthorName.get(position)
+            );
+
+            fragmentManager.beginTransaction()
+                    .add(R.id.super_container, fullImageFragment)
+                    .addToBackStack("FullImageFragment")
+                    .commit();
+
+
             Timber.d("Position " + position + "selected");
         }
     }
@@ -203,8 +233,8 @@ public class PhotoListFragment extends Fragment {
 
                 if (response.isSuccessful()) {
 
-                    Timber.d("CODE: "+ response.code());
-                    Timber.d("response.body(): "+ response.body().toString());
+                    Timber.d("CODE: " + response.code());
+                    Timber.d("response.body(): " + response.body().toString());
 
                     int totalElements;
                     PhotoModel photoModel;
@@ -218,7 +248,7 @@ public class PhotoListFragment extends Fragment {
                         swiperefresh.setRefreshing(false);
                     }
 
-                    Timber.d("totalElements: "+ totalElements);
+                    Timber.d("totalElements: " + totalElements);
                     if (totalElements > 0) {
                         photos = photoModel.getPhotos();
 
@@ -254,6 +284,19 @@ public class PhotoListFragment extends Fragment {
      * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      * ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
      */
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("pageCounter", pageCounter);
+        outState.putInt("totalPages", totalPages);
+        outState.putString("keyWord", keyWord);
+        outState.putStringArrayList("arrayPhotos",arrayPhotos);
+        outState.putStringArrayList("arrayAuthorAvatar",arrayAuthorAvatar);
+        outState.putStringArrayList("arrayAuthorName",arrayAuthorName);
+        outState.putStringArrayList("arrayTitles",arrayTitles);
+    }
 
     @Override
     public void onStart() {

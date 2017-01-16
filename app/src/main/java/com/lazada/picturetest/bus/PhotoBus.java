@@ -1,4 +1,4 @@
-package com.lazada.picturetest.Bus;
+package com.lazada.picturetest.bus;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;

@@ -19,11 +19,11 @@
 
         <ImageView
             android:id="@+id/img_background"
-            android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/divisor"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:clickable="false" />
 
 
     </RelativeLayout>

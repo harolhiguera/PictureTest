@@ -22,5 +22,7 @@
     <color name="shade_02">#20000000</color>
     <color name="shade_03">#00000000</color>
 
+    <color name="bar_grey">#484D51</color>
+
 
 </resources>

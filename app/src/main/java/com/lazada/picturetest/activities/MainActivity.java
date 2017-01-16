@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.lazada.picturetest.Bus.PhotoBus;
+import com.lazada.picturetest.bus.PhotoBus;
 import com.lazada.picturetest.R;
 import com.lazada.picturetest.fragments.MainFragment;
 import com.lazada.picturetest.helpers.Utils;
@@ -15,6 +15,7 @@ import com.lazada.picturetest.helpers.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.subscriptions.CompositeSubscription;
+import timber.log.Timber;
 
 /**
  * Created by Harol Higuera on 1/15/17.
@@ -50,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
 
-        fragmentManager.beginTransaction().replace(R.id.main_container, new MainFragment()).commit();
+        if (savedInstanceState == null){
+            fragmentManager.beginTransaction().replace(R.id.main_container, new MainFragment()).commit();
+        }
 
         compositeSubscription = new CompositeSubscription();
 
@@ -98,5 +101,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        if (compositeSubscription != null) {
+            compositeSubscription.unsubscribe();
+            compositeSubscription.clear();
+        }
+        Timber.d("onDestroy");
+        super.onDestroy();
     }
 }

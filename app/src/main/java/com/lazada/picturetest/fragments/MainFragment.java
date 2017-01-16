@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.lazada.picturetest.Bus.PhotoBus;
+import com.lazada.picturetest.bus.PhotoBus;
 import com.lazada.picturetest.R;
 import com.lazada.picturetest.adapters.ListOfCategoriesAdapter;
 import com.lazada.picturetest.helpers.Constant;
@@ -26,9 +26,8 @@ import timber.log.Timber;
  */
 public class MainFragment extends Fragment {
 
-
-
     private Unbinder unbinder;
+    private boolean isRecreated;
 
     @BindView(R.id.list_categories)
     ListView list_categories;
@@ -40,6 +39,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         unbinder = ButterKnife.bind(this,view);
